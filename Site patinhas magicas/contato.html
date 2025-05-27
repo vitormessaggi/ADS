@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="CSS/servicos.css" rel="stylesheet">
+    <link href="CSS/contato.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosso Servicos</title>
@@ -21,9 +21,49 @@
     </header>
 
     <main>
-        <!--Contato-->
-        
-
+        <ul class="contato-titulo">
+            <li class="contato-item">Contato</li>
+          </ul>
+          <p class="texto-contato">Você também me encontra no Instagram, no WhatsApp ou preenchendo o formulário abaixo.</p>
+          <!-- Formulário -->
+          <form id="frmContato">
+            <fieldset>
+              <legend>Dados Pessoais</legend>
+              <label>Nome e sobrenome:</label>
+              <input type="text" id="nomesobrenome" name="" class="input-padrao" required>
+              
+              <label>E-mail:</label>
+              <input type="email" id="email" name="" class="input-padrao" placeholder="seuemail@dominio.com">
+      
+              <label>Telefone:</label>
+              <input type="tel" id="telefone" name="" class="input-padrao" placeholder="(XX) XXXXX-XXXX">
+      
+              <label>* Mensagem:</label>
+              <textarea cols="70" rows="10" id="mensagem" class="input-padrao" required></textarea>
+      
+              <label>Como prefere o nosso contato?
+                <input type="radio" value="radio-mail" name="Contato"> E-mail
+                <input type="radio" value="radio-telefone" name="Contato"> Telefone
+                <input type="radio" value="radio-whatsapp" name="Contato"> Whatsapp
+              </label>
+      
+              <br>
+              <label>Qual o motivo do seu contato?
+                <select>
+                  <option>Selecione</option>
+                  <option>Dúvida</option>
+                  <option>Sugestão</option>
+                  <option>Elogio</option>
+                  <option>Reclamação</option>
+                </select>
+              </label>
+              <br>
+            </fieldset>
+      
+            <label><input type="checkbox" class="chk"> Gostaria de receber nossas novidades por e-mail?</label>
+      
+            <input type="submit" id="enviar" value="Enviar formulário" class="enviar">
+          </form>
     </main> 
         <!--Rodapé-->
     <footer class="rodape">
