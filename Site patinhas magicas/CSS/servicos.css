@@ -1,0 +1,152 @@
+/*Header */
+header{
+    background-color: orange;
+    padding: 20px 0 20px 10px;
+}
+
+.logo{
+    width: 7%;
+}
+
+.divHeader{
+    position: relative;
+}
+
+/* Menu*/
+nav{
+    color: white;
+    font-size: 28;
+    right: 100px;
+    top: 40px;
+    position: absolute;
+    font-size: larger;
+
+}
+
+nav li{
+    display: inline;
+    margin-right: 50px;
+}
+
+/* Body da pagina */
+body{
+    margin: 0;
+    border: 0;
+    font-family: 'Tahoma', 'Arial'; /*fonte principal tahoma e se não tiver arial */
+    background: linear-gradient(blue, white);
+
+}
+
+.banner{
+    width: 100%;
+    height: 40%;
+    object-fit: cover;
+}
+
+/*Servicos*/
+.servico-title{
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    list-style: none;
+    font-family: cursive;
+}
+
+.servicos:before{
+    content: "🐶";
+}
+
+.text-serv{
+    padding-left: 5%;
+    color:white;
+
+}
+
+/*Cards*/
+.container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap:20px;
+    padding-bottom: 20px;
+    color: white;
+
+}
+
+.card{
+    background: orange;
+    width: 280px;
+    border-radius: 0 4px 8px rgba(0,0,0,0,2);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3ms ease-in-out;
+}
+.card:hover{
+    transform: scale(1.05);
+}
+.card img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.card2{
+    background: orange;
+    width: 280px;
+    border-radius: 0 4px 8px rgba(0,0,0,0,2);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3ms ease-in-out;
+}
+.card2:hover{
+    transform: scale(1.05);
+}
+.card2 img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card3{
+    background: orange;
+    width: 280px;
+    border-radius: 0 4px 8px rgba(0,0,0,0,2);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3ms ease-in-out;
+}
+.card3:hover{
+    transform: scale(1.05);
+}
+.card3 img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/*Rodapé*/
+.logo_baixo{
+    width: 5%;
+    padding-left: 20px;
+}
+
+footer p{
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+    font-size: 20px;
+    
+}
+
+
+.rodape{
+    background-color: orange;
+    font-weight: bold;
+    color:white;
+    
+}
