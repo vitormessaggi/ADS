@@ -52,7 +52,7 @@ public class inicio extends javax.swing.JFrame implements Runnable{
         jPanel2.add(progressbar);
         progressbar.setBounds(200, 360, 530, 40);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\vitor\\Desktop\\Project\\Cadastro\\src\\main\\java\\com\\mycompany\\cadastro\\imageedit_2_4840078741.gif")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\25170637\\Desktop\\ADS\\Java\\Cadastro\\src\\main\\java\\com\\mycompany\\cadastro\\imageedit_2_4840078741.gif")); // NOI18N
         jPanel2.add(jLabel1);
         jLabel1.setBounds(240, -70, 660, 490);
 

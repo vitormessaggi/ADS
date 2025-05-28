@@ -53,7 +53,7 @@ public class menu extends javax.swing.JFrame {
         jLabel1.setText("Menu de opções");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 245, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\vitor\\Desktop\\Project\\Cadastro\\src\\main\\java\\com\\mycompany\\cadastro\\logoTalismaImoveis.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\25170637\\Desktop\\ADS\\Java\\Cadastro\\src\\main\\java\\com\\mycompany\\cadastro\\logoTalismaImoveis.png")); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 310, 110));
 
         jButton1.setBackground(new java.awt.Color(204, 0, 51));
@@ -86,7 +86,7 @@ public class menu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 360, 160, 40));
 
-        jButton4.setBackground(new java.awt.Color(204, 0, 51));
+        jButton4.setBackground(new java.awt.Color(102, 102, 255));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Cadastro de clientes");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
