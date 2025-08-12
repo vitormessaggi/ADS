@@ -1,0 +1,98 @@
+ 
+  /* Estilização do body */
+  body {
+    margin: 0;
+    border: 0;
+    background-color: rgb(14, 14, 14);
+    font-family: "Poppins";
+    color: white;
+  }
+  
+  /* Estilização do header */
+header{
+    background-color: rgb(4, 4, 22);
+    padding: 20px 0 20px 10px;
+}
+
+.logo{
+    width: 7%;
+}
+
+.divHeader{
+    position: relative;
+}
+
+/* Menu*/
+nav{
+    color: white;
+    font-size: 28;
+    right: 100px;
+    top: 40px;
+    position: absolute;
+    font-size: larger;
+
+}
+
+nav li{
+    display: inline;
+    margin-right: 50px;
+}
+
+  
+  /* Estilização da div do header */
+  .divHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /*encomendas titulo */
+  .encomendas-item{
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    list-style: none;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* tablea de encomendas */
+  table{
+    width: 100%;
+    margin-bottom: 2%;
+    table-layout: fixed;
+  }
+
+  td,th{
+    padding: 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  th{
+    font-weight: bold;  
+    color: white;
+    background-color: rgb(8, 8, 109);
+  }
+
+  /*Rodapé*/
+.logo_baixo{
+    width: 5%;
+    padding-left: 20px;
+}
+
+footer p{
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+    font-size: 20px;
+    
+}
+
+
+.rodape{
+    background-color: (4, 4, 22);
+    font-weight: bold;
+    color:white;
+    
+}

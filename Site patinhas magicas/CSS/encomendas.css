@@ -1,0 +1,46 @@
+ 
+  /* Estilização do body */
+  body {
+    margin: 0;
+    border: 0;
+    background-color: #9668D6;
+    font-family: "Poppins";
+  }
+  
+  /* Estilização do header */
+header{
+    background-color: orange;
+    padding: 20px 0 20px 10px;
+}
+
+.logo{
+    width: 7%;
+}
+
+.divHeader{
+    position: relative;
+}
+
+/* Menu*/
+nav{
+    color: white;
+    font-size: 28;
+    right: 100px;
+    top: 40px;
+    position: absolute;
+    font-size: larger;
+
+}
+
+nav li{
+    display: inline;
+    margin-right: 50px;
+}
+
+  
+  /* Estilização da div do header */
+  .divHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }

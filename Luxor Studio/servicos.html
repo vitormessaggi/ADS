@@ -4,18 +4,7 @@
     <link href="CSS/servicos.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosso Servicos</title>
-    <script>
-        alert("Conheça nossos serviço");
-        data=new Date
-        document.write(data);
-
-        //Função para abrir a pop de detalhe dos serviços
-        function abrirDetalhes(nome,imagem,descricao){
-            const url=`pop_produto.html?nomeProd=${encodeURIComponent(nome)}&imagemProd=${encodeURIComponent(imagem)}&descricaoProd=${encodeURIComponent(descricao)}`
-            window.open(url, "_blank", "widt=800,height=700")
-        }
-    </script>
+    <title>Luxor Studio</title>
 </head>
 <body>
     <header>
@@ -37,35 +26,35 @@
         <ul class="servico-title">
             <li class="servicos">Servicos</li>
         </ul>
-        <p class="text-serv">Todos nossos serviços são realizados por especialistas para entregar o maximo de conforto ao seu amigo de 4 patas.</p>
+        <p class="text-serv">Confira nossos serviços de maior qualidade para seu carro</p>
         <br><br>
         <script>
-                slider = ['/Images/taxidog.jpg', '/Images/banhoetosa.png', '/Images/veterinario.jpg']
-                slider2 = ['/Images/banhoetosa.png', '/Images/taxidog.jpg', '/Images/veterinario.jpg']
-                slider3 = ['/Images/veterinario.jpg', '/Images/banhoetosa.png', '/Images/taxidog.jpg']
+                slider = ['/Images/im1.png', '/Images/im2.png', '/Images/im3.png']
+                slider2 = ['/Images/im2.png', '/Images/im3', '/Images/im1.png']
+                slider3 = ['/Images/im3.png', '/Images/im2.png', '/Images/im1.png']
         </script>
         </script>
         <div class="container">
             <div class="card" onclick = "abrirDetalhes('taxi Dog', slider, 'Para maior comodidade aos papais, contamos com o taxi dog que busca e leva seu amiguinho após os cuidados em nosso pet shop.')">
-                <img src="/Images/taxidog.jpg">
+                <img src="/Images/im1.png">
                 <h2>Taxi dog</h2>
             </div>
             <div class="card2" onclick = "abrirDetalhes('Banho e tosa', slider2, 'Nossos fncionários são estremamente capacitados nos melhores cudados para seus pets, com toda a atenção para um')">
-                <img src="/Images/banhoetosa.png">
+                <img src="/Images/im2.png">
                 <h2>Banho e tosa</h2>
             </div>
             <div class="card3" onclick = "abrirDetalhes('Veterinario', slider3, 'Nosso estabelecimento conta com uma veterináia especializada em cirugias e diagnósticos, com mais de 10 anos de esperiencia em atendimento de cachorros e gatos.')">
-                <img src='/Images/veterinario.jpg'>
+                <img src='/Images/im3.png'>
                 <h2>Veterinário</h2>
             </div>
         </div>
         <br><br><br><br>
     </main> 
-        <!--Rodapé-->
+    <!--Rodapé-->
     <footer class="rodape">
         <img src="Images/logo.png" alt="logo" class="logo_baixo">
-        <p>Contate-nos (11) 98181-0223</p>    
-        <p>@patinhasmagicas</p>    
+        <p>Contate-nos (11)966068619</p>    
+        <p>@luxorstudio</p>    
     </footer>
 </body>
 </html>

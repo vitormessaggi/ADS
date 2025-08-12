@@ -1,0 +1,61 @@
+@font-face {
+    font-family: Poppins;
+    src: url("../fonts/Poppins/Poppins-Medium.ttf");
+  }
+  
+  /* Estilização do body */
+  body {
+    margin: 0;
+    border: 0;
+    background: linear-gradient(rgb(14, 14, 14));
+    font-family: "Poppins";
+  }
+  
+  /* Estilização da div do header */
+  .divHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Título */
+  #nome-produto {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    list-style: none;
+    text-align: center;
+  }
+  
+  #imagem-produto {
+    margin-left: 90px;
+  }
+  
+  #descricao-produto {
+    font-size: 15px;
+    font-weight: regular;
+    color: white;
+    list-style: none;
+    margin-left: 160px;
+  }
+  
+  #slider-img {
+    width: 60%;
+  }
+  
+  .slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .slider button{
+    background-color: #2D2D2F;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+  }
