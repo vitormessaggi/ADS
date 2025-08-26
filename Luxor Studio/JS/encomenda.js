@@ -12,7 +12,8 @@ for(var count=0; count <clientes.length; count++){ //roda o for enquanto o numer
     if(quantidade < 1 || isNaN(quantidade)){ //Quantidade menor que 1 ou não numerico
         clientes[count].querySelector(".qtd ").textContent = "Quantidade errada";
         //clientes[count].querySelector(".qtd").style.color = "red";
-        clientes[count].style.color = "red";
+        //clientes[count].style.color = "red";
+        clientes[count].classList.add("txt-invalido");
     }
 
     else{
@@ -22,7 +23,7 @@ for(var count=0; count <clientes.length; count++){ //roda o for enquanto o numer
     //verificação se o valor unitario é valido
     if(unitario <1 || isNaN(unitario)){
         clientes[count].querySelector(".unitario").textContent = "Valor unitario errado!";
-        clientes[count].querySelector(".unitario").style.color = "purple";
+        clientes[count].classList.add("info-invalida");
     }
 
     else{

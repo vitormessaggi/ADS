@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link href="css/encomendas.css" rel="stylesheet">
 
@@ -7,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encomendas</title>
 </head>
+
 <body>
     <header>
         <div class="divHeader">
@@ -25,9 +27,9 @@
         <ul class="encomendas-titulo">
             <li class="encomendas-item">Encomendas</li>
         </ul>
-        <section class="container">
+        <section class="container" id="encomendas">
             <!-- tabela das encomendas -->
-             <table>
+            <table>
                 <thead>
                     <tr><!--  criar nova linha -->
                         <th>Nome</th>
@@ -42,7 +44,7 @@
                         <td class="nome">Pedro Augusto</td>
                         <td class="produto">Higienização</td>
                         <td class="qtd">2</td>
-                        <td class="unitario">100</td>
+                        <td class="unitario">1</td>
                         <td class="total"></td>
                     </tr>
                     <tr class="cliente">
@@ -51,17 +53,46 @@
                         <td class="qtd">1</td>
                         <td class="unitario">100</td>
                         <td class="total"></td>
-                    </tr> 
+                    </tr>
                 </tbody>
-             </table>
+            </table>
+            <!-- tabela das encomendas -->
+          <form class="cad">
+              <h2 class="tnew">Novas encomendas</h2>
+                <div class="name">
+                    <label>Nome:</label>
+                    <input type="text" id="nomesobrenome" name="" class="input-padrao" >
+                </div>
+
+                <div class="prod">
+                    <label>Produto</label>
+                    <input type="text" id="produto" name="" class="input-padrao">
+                </div>
+                
+                <div class="qtd2">
+                    <label>Quantidade:</label>
+                    <input type="text" id="quantidade" name="" class="input-padrao" >
+                </div>
+
+                <div class="unit">
+                    <label>Valor unitario:</label>
+                    <input type="text" id="unit" name="" class="input-padrao" >
+                </div>
+
+      
+            <button id="newencomenda" type="submit">Cadastrar</button>
+          </form>
         </section>
+
     </main>
     <!--Rodapé-->
     <footer class="rodape">
         <img src="Images/logo.png" alt="logo" class="logo_baixo">
-        <p>Contate-nos (11)966068619</p>    
-        <p>@luxorstudio</p>    
+        <p>Contate-nos (11)966068619</p>
+        <p>@luxorstudio</p>
     </footer>
     <script src="JS/encomenda.js"></script>
+    <script src="JS/adicionaEncomenda.js"></script>
 </body>
+
 </html>
