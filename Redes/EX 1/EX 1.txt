@@ -1,0 +1,35 @@
+IP rede 10.84.0.0/8 -> mascara = 255.0.0.0
+
+1 - 31 computadores = IP (rede/broadcast) + IPs válidos + ultimo valido) mascara de rede 
+2 - 260 computadores
+3- 345 computadores
+4- 50 computadores
+
+
+Para 345 - 512 ips
+rede = 10.84.0.0
+broadcast = 10.84.1.255
+ip válido = 10.84.0.1
+último ip válido = 10.84.1.254
+mascara 255.255.254 / 23 
+
+para 260 - 512 ips
+rede = 10.84.2.0
+broadcast = 10.84.3.255
+ip válido = 10.84.2.1
+último ip válido = 10.84.3.254
+mascara 255.255.254 / 23 
+
+para 50 - 64 ips
+rede = 10.84.4.0
+broadcast = 10.84.4.63
+ip válido = 10.84.4.1
+último ip válido = 10.84.4.62
+mascara 255.255.255.192 / 26
+
+Para 31 - 64 ips
+rede = 10.84.0.0
+broadcast = 10.84.4.64
+ip válido = 10.84.4.127
+último ip válido = 10.84.4.126
+mascara 255.255.255.192 / 26
