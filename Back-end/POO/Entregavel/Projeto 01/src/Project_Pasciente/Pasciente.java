@@ -1,4 +1,4 @@
-package Project;
+package Project_Pasciente;
 
 public class Pasciente {
     private String nome;
