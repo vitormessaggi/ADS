@@ -2,6 +2,10 @@
 
 //captura das encomendas
 var clientes = document.querySelectorAll(".cliente");
+var novaEncomenda = obterEncomenda(form);
+
+adicionarEncomendaTabela(novaEncomenda)
+
 
 // Calcula o valor total de todas as encomendas
 for(var count=0; count <clientes.length; count++){ //roda o for enquanto o numero de clientes for menor que a variável de contagem
@@ -29,6 +33,12 @@ for(var count=0; count <clientes.length; count++){ //roda o for enquanto o numer
     else{
         clientes[count].querySelector(".unitario").textContent = calculoTotal(quantidade,unitario);
     }
+}
+
+//função para adicionar encomenda
+function adicionarEncomendaTabela(novaEncomenda){
+    var tabela = document.querySelector("#tabela-clientes");
+    tabela.appendChild(montaTR(novaEncomenda));
 }
 
 //função de Calculo total dos valores
