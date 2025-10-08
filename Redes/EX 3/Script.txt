@@ -1,0 +1,78 @@
+-------------SW1-------------- 
+enable
+conf t
+vlan 10
+name SRV	
+vlan 20 
+name ADM
+vlan 30
+name TI
+exit
+vtp mode server
+vtp domain cisco
+vtp password cisco
+int fa 0/1
+sw acc vlan 10
+exit
+sw rang fa 0/2-9
+sw acc vl 20
+exit
+int rang fa 0/10-19
+int acc vl 30
+exit
+int range gi 0/1-2
+sw mo trunk
+sw trunk all vlan all
+exit
+
+
+-------------SW2-------------- 
+enable 
+conf t
+vtp mode client
+vtp domain cisco
+vtp password cisco 
+int fa 0/1
+sw acc vlan 10
+exit
+int rang fa 0/1-9
+sw acc vl 20
+exit
+int rang fa 0/10-19
+sw acc vl 30
+exit
+int range gi 0/1-2
+sw mo trunk
+sw trunk all vlan all
+exit
+
+
+-------------ROUTER-------------- 
+enable
+conf t
+int giga 0/0/0
+no shut
+exit
+int giga 0/0/0.10
+description ####Vlan SRV #####
+encapsulation dot1Q 10
+ip address 192.168.1.1 255.255.255.0
+ip helper-address 192.168.1.10
+exit
+inte giga 0/0/0.20
+description ####Vlan ADM #####
+encapsulation dot1Q 20
+ip address 192.168.10.1 255.255.255.0
+ip helper-address 192.168.1.10
+exit
+int giga 0/0/0.30
+description ####Vlan TI #####
+encapsulation dot1Q 30
+ip address 192.168.20.1 255.255.255.0
+ip helper-address 192.168.1.10
+exit
+
+
+
+
+
