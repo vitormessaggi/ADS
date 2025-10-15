@@ -1,0 +1,120 @@
+! Configuração do SW1 (Access Switch - VTP Server)
+enable
+configure terminal
+hostname SW1
+vtp mode server
+vtp domain INDTECH
+vtp password ind@123
+vlan 10
+ name Administrativo
+vlan 20
+ name Engenharia
+vlan 30
+ name TI
+vlan 40
+ name Servidores
+vlan 50
+ name Automacao
+vlan 99
+ name Gerenciamento
+exit
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,50,99
+interface FastEthernet0/1
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,50,99
+interface FastEthernet0/2
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,50,99
+interface FastEthernet0/10
+ switchport mode access
+ switchport access vlan 10
+interface FastEthernet0/11
+ switchport mode access
+ switchport access vlan 20
+interface FastEthernet0/12
+ switchport mode access
+ switchport access vlan 30
+end
+write memory
+
+==========================================================================================
+
+! Configuração do SW2 (Access Switch - VTP Client)
+enable
+configure terminal
+hostname SW2
+vtp mode client
+vtp domain INDTECH
+vtp password ind@123
+interface FastEthernet0/1
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,50,99
+interface FastEthernet0/10
+ switchport mode access
+ switchport access vlan 40
+end
+write memory
+
+==========================================================================================
+
+! Configuração do SW3 (Automation Switch - VTP Transparent)
+enable
+configure terminal
+hostname SW3
+vtp mode transparent
+vlan 50
+ name Automacao
+vlan 99
+ name Gerenciamento
+interface FastEthernet0/2
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,30,40,50,99
+interface FastEthernet0/10 
+ switchport mode access
+ switchport access vlan 99
+interface FastEthernet0/11
+ switchport mode access
+ switchport access vlan 50
+end
+write memory
+
+==========================================================================================
+
+
+! Configuração do R1 (Router-on-a-Stick)
+enable
+configure terminal
+hostname R1
+interface GigabitEthernet0/0/0
+ no shut down
+interface GigabitEthernet0/0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ ip helper-address 192.168.40.10
+interface GigabitEthernet0/0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ ip helper-address 192.168.40.10
+interface GigabitEthernet0/0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ ip helper-address 192.168.40.10
+interface GigabitEthernet0/0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.40.1 255.255.255.0
+interface GigabitEthernet0/0/0.50
+ encapsulation dot1Q 50
+ ip address 192.168.50.1 255.255.255.0
+interface GigabitEthernet0/0/0.99
+ encapsulation dot1Q 99 native
+ ip address 192.168.99.1 255.255.255.0
+end
+write memory
+
