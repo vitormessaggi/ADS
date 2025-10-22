@@ -1,0 +1,70 @@
+**************** Rounter 1 ****************
+enable
+conf t
+hostname r1
+int serial 0/1/0
+ip add 10.10.1 255.255.255.252
+no shut
+exit
+ip route 172.16.5.100 255.255.255.0 10.10.2 
+int gi 0/0/0
+no shut
+ip add 192.168.0.1 255.255.255.0
+do wr
+
+**************** Rounter 2 ****************
+enable
+conf t
+hostname r2
+int serial 0/1/0
+ip add 10.10.2 255.255.255.252
+no shut
+exit
+ip route 172.16.10.1 255.255.255.0 10.10.1
+int gi 0/0/0
+no shut
+ip add 172.16.5.1 255.255.255.0
+do wr
+
+**************** Rounter 3 ****************
+enable
+conf t
+hostname R3
+int gi 0/0/0
+no shut
+ip add 192.168.0.1 255.255.255.0
+int serial 0/1/0
+ip add 10.10.10.1 255.255.255.252
+no shut
+exit
+ip route 172.16.5.1 255.255.255.0 10.10.10.2
+do wr
+
+**************** Rounter 4 ****************
+enable
+conf t
+hostname R4
+int serial 0/1/0
+ip add 10.10.10.2 255.255.255.252
+no shut
+int serial 0/1/1
+ip add 10.10.10.5 255.255.255.252
+no shut
+exit
+ip route 172.16.5.1 255.255.255.0 10.10.10.6
+ip route 192.168.0.1 255.255.255.0 10.10.10.1
+do wr
+
+**************** Rounter 5 ****************
+enable
+conf t
+hostname R5
+int gi 0/0/0
+no shut
+ip add 172.16.5.1 255.255.255.0
+int serial 0/1/1
+ip add 10.10.10.6 255.255.255.252
+no shut
+exit
+ip route 192.168.0.1 255.255.255.0 10.10.10.5
+do wr
