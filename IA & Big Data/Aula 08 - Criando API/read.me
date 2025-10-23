@@ -1,0 +1,145 @@
+Link de tutorial para configuração do Miniconda
+# Tutorial: Configurando o Ambiente de IA com Miniconda + Jupyter
+
+## 1️⃣ Instalar o Miniconda no Windows
+
+**Passos:**
+
+1. Acesse o site oficial:
+    
+    https://docs.conda.io/en/latest/miniconda.html
+    
+2. Baixe a versão para **Windows 64-bit**, tipo **Python 3.x (mais recente)**.
+    
+    Exemplo de arquivo:
+    
+    `Miniconda3-py311_24.7.1-0-Windows-x86_64.exe`
+    
+3. Execute o instalador e siga as etapas:
+    - Marque a opção: `Add Miniconda3 to my PATH environment variable`
+    - Marque a opção: `Register Miniconda3 as the system Python 3`
+    - Clique em **Install** e aguarde.
+    - Finalize com **Finish**.
+4. Teste a instalação:
+    
+    Abra o **Prompt do Miniconda** e digite:
+    
+    ```
+    conda --version
+    ```
+    
+    Deve aparecer algo como:
+    
+    ```
+    conda 24.7.1
+    ```
+    
+
+---
+
+## 2️⃣ Criar o ambiente virtual “ia_ads” com Python 3.13
+
+1. Crie o ambiente:
+    
+    ```
+    conda create -n ia_ads python=3.13
+    ```
+    
+2. Ative o ambiente:
+    
+    ```
+    conda activate ia_ads
+    ```
+    
+3. Instale as bibliotecas:
+    
+    ```
+    pip install matplotlib seaborn scikit-learn uvicorn nest_asyncio jupyter pydantic fastapi
+    ```
+    
+
+---
+
+## 3️⃣ Como usar o ambiente e o Jupyter Notebook
+
+## Abrir o terminal na pasta do notebook
+
+Vá até a pasta onde o arquivo está salvo.
+
+- Clique na barra de endereços, digite `cmd` ou `powershell` e pressione **Enter**.
+- O terminal abrirá já na pasta correta.
+
+## Ativar o ambiente virtual (opcional, mas recomendado)
+
+Se você usa o **Conda** (Miniconda ou Anaconda):
+
+```
+conda activate ia_ads
+```
+
+Isso garante que o Jupyter será executado com as bibliotecas corretas do seu ambiente.
+
+---
+
+## Abrir o Jupyter Notebook
+
+Agora, com o ambiente ativado e estando na pasta do arquivo, execute:
+
+```
+jupyter notebook
+```
+
+Após alguns segundos, o Jupyter abrirá automaticamente no navegador padrão (geralmente o Edge ou Chrome), mostrando o conteúdo da pasta.
+
+---
+
+## Abrir o arquivo `.ipynb`
+
+Na página do navegador (interface do Jupyter):
+
+1. Localize o arquivo do notebook, por exemplo:
+    
+    ```
+    analise.ipynb
+    ```
+    
+2. Clique sobre ele para abrir.
+
+---
+
+## Encerrar o Jupyter Notebook
+
+Quando terminar o trabalho:
+
+1. Volte ao terminal onde ele foi iniciado.
+2. Pressione **Ctrl + C**.
+3. Confirme com **Y** se aparecer a pergunta:
+    
+    ```
+    Shutdown this notebook server (y/[n])? y
+    ```
+    
+
+---
+
+## Resumo rápido
+
+| Ação | Comando / Passo |
+| --- | --- |
+| Ir até a pasta | `cd caminho\da\pasta` |
+| Ativar ambiente Conda | `conda activate ia_ads` |
+| Abrir Jupyter | `jupyter notebook` |
+| Abrir arquivo direto | `jupyter notebook caminho\arquivo.ipynb` |
+| Fechar o servidor | `Ctrl + C` → `Y` |
+
+---
+
+## Dica extra: abrir JupyterLab (interface moderna)
+
+Se quiser uma interface mais moderna:
+
+```
+jupyter lab
+```
+
+O JupyterLab traz abas, painéis e visual mais próximo do VS Code.
