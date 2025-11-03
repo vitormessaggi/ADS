@@ -59,6 +59,76 @@ header{
 
 .divHeader{
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 40px;
+}
+
+/*Menu padrão*/
+nav.menu ul{
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    font-size: arial;
+    font-size: 35px;
+    margin: 0;
+    padding: 0;
+}
+
+nav.menu li a{
+    color: white;
+    text-decoration: none;
+}
+
+/*Botão hamvurguer*/
+.menu-toogle {
+    display: none;
+    font-size: 40px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/*Responsivo*/
+@media (max-width: 768px){
+    header {
+        padding: 20px;
+    }
+
+    .logo{
+        width: 40%;
+    }
+
+    .menu-toogle{
+        display: block;
+    }
+
+    nav.menu{
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: black;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+    }
+
+    nav.menu.ativo{
+        display: block;
+    }
+    
+    nav.menu ul {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    nav.menu li{
+        font-size: 28px;
+    }
 }
 
 /* Menu*/
