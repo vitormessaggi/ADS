@@ -12,7 +12,7 @@
 	<artifactId>produtosapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Produtos API</name>
-	<description>API Produtos</description>
+	<description>API de Produtos</description>
 	<url/>
 	<licenses>
 		<license/>
