@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroTech — Painel de Monitoramento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #f5f2ed;
+  --surface:     #fffefb;
+  --surface-2:   #f0ede7;
+  --border:      #e2ddd5;
+  --border-soft: #ede9e2;
+
+  --ink:         #2a2620;
+  --ink-2:       #6b6358;
+  --ink-3:       #b0a898;
+
+  --sage:        #5a7a5c;
+  --sage-light:  #e8efe8;
+  --sage-mid:    #8aaa8c;
+
+  --olive:       #7a7a42;
+  --olive-light: #f0f0dc;
+
+  --clay:        #9a6b4b;
+  --clay-light:  #f5ece4;
+
+  --wheat:       #c4a44a;
+  --wheat-light: #fdf6e3;
+
+  --caution:     #b85c38;
+  --caution-lt:  #fbeee8;
+
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-ui:    'DM Sans', sans-serif;
+  --font-mono:  'DM Mono', monospace;
+
+  --radius:    6px;
+  --radius-lg: 12px;
+  --shadow:    0 1px 4px rgba(42,38,32,0.07), 0 4px 16px rgba(42,38,32,0.05);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* HEADER */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-leaf {
+  width: 32px; height: 32px;
+  background: var(--sage-light);
+  border-radius: 8px;
+  display: grid; place-items: center;
+  font-size: 16px;
+}
+.logo-name { font-family: var(--font-serif); font-size: 18px; font-weight: 500; letter-spacing: -0.3px; }
+.logo-sep  { color: var(--border); margin: 0 4px; }
+.logo-farm { font-size: 13px; color: var(--ink-2); font-weight: 300; }
+.header-right { display: flex; align-items: center; gap: 24px; }
+.live-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--sage-light);
+  border: 1px solid rgba(90,122,92,0.2);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 11px; color: var(--sage); font-weight: 500;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sage);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+.clock { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); text-align: right; line-height: 1.5; }
+
+/* LAYOUT */
+.dashboard {
+  max-width: 1320px; margin: 0 auto;
+  padding: 28px 32px 48px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.page-title { display: flex; align-items: baseline; gap: 14px; }
+.page-title h1 { font-family: var(--font-serif); font-size: 26px; font-weight: 400; letter-spacing: -0.5px; }
+.page-title span { font-size: 13px; color: var(--ink-3); font-weight: 300; }
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  animation: rise 0.35s ease both;
+}
+.card-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-label-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* KPI ROW */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+.kpi-num { font-family: var(--font-mono); font-size: 34px; line-height: 1; font-weight: 400; letter-spacing: -1px; }
+.kpi-unit { font-size: 14px; font-weight: 300; color: var(--ink-2); margin-left: 2px; }
+.kpi-desc { font-size: 12px; color: var(--ink-2); font-weight: 300; margin-top: 4px; }
+.kpi-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 10px;
+  margin-top: 10px; padding: 2px 8px; border-radius: 4px; width: fit-content;
+}
+.tag-up  { background: var(--sage-light);  color: var(--sage); }
+.tag-nt  { background: var(--surface-2);   color: var(--ink-3); }
+.tag-wn  { background: var(--caution-lt);  color: var(--caution); }
+.kpi-bar { height: 2px; background: var(--border-soft); border-radius: 2px; margin-top: 14px; overflow: hidden; }
+.kpi-bar-fill { height: 100%; border-radius: 2px; }
+
+/* MAIN GRID */
+.main-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+
+/* FIELD MAP */
+.field-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 5px; margin-top: 4px; }
+.field-cell {
+  aspect-ratio: 1.5; border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+}
+.field-cell:hover { transform: scale(1.06); box-shadow: 0 2px 10px rgba(42,38,32,0.12); z-index: 2; }
+.field-cell.ex  { background:#eaf3ea; border-color:#c0d9c1; }
+.field-cell.bom { background:#f2f3e6; border-color:#d5d8af; }
+.field-cell.mod { background:#fdf5e4; border-color:#e8d9aa; }
+.field-cell.low { background:#fbede7; border-color:#e8c4b3; }
+.field-cell.off { background:var(--surface-2); border-color:var(--border-soft); }
+.fc-id   { font-family:var(--font-mono); font-size:9px; color:var(--ink-3); }
+.fc-val  { font-family:var(--font-mono); font-size:13px; font-weight:500; }
+.fc-crop { font-size:8px; letter-spacing:.5px; }
+.field-cell.ex  .fc-val  { color:#3d6b3f; } .field-cell.ex  .fc-crop { color:#5a8a5c; }
+.field-cell.bom .fc-val  { color:#5a5a28; } .field-cell.bom .fc-crop { color:#7a7a42; }
+.field-cell.mod .fc-val  { color:#8a6020; } .field-cell.mod .fc-crop { color:#a08040; }
+.field-cell.low .fc-val  { color:var(--caution); } .field-cell.low .fc-crop { color:#b06040; }
+.field-cell.off .fc-val  { color:var(--ink-3); }  .field-cell.off .fc-crop { color:var(--ink-3); }
+.map-legend { display:flex; gap:14px; margin-top:12px; font-size:10px; color:var(--ink-3); flex-wrap:wrap; }
+.legend-dot { display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:4px; vertical-align:middle; }
+
+/* ALERTS */
+.alert-stack { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+.alert-row {
+  display:flex; gap:12px; align-items:flex-start;
+  padding:11px 13px; border-radius:var(--radius); border:1px solid var(--border-soft);
+}
+.alert-row.crit { background:var(--caution-lt); border-color:#e8c4b3; }
+.alert-row.warn { background:var(--wheat-light); border-color:#f0dfa0; }
+.alert-row.info { background:var(--sage-light);  border-color:rgba(90,122,92,0.2); }
+.alert-icon { font-size:15px; flex-shrink:0; margin-top:1px; }
+.alert-title  { font-size:12px; font-weight:600; margin-bottom:2px; }
+.alert-detail { font-size:11px; font-weight:300; color:var(--ink-2); line-height:1.4; }
+.alert-row.crit .alert-title { color:var(--caution); }
+.alert-row.warn .alert-title { color:var(--olive); }
+.alert-row.info .alert-title { color:var(--sage); }
+.alert-time { margin-left:auto; font-family:var(--font-mono); font-size:10px; color:var(--ink-3); white-space:nowrap; flex-shrink:0; }
+
+/* BOTTOM GRID */
+.bottom-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+
+/* IRRIGAÇÃO */
+.irr-list { display:flex; flex-direction:column; gap:7px; margin-top:4px; }
+.irr-row  {
+  display:grid; grid-template-columns:46px 1fr auto;
+  align-items:center; gap:12px;
+  padding:8px 12px; background:var(--surface-2);
+  border-radius:var(--radius); border:1px solid var(--border-soft);
+}
+.irr-id   { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); }
+.irr-name { font-size:11px; font-weight:500; }
+.irr-umid { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); }
+.sdot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.s-on  { background:var(--sage);    box-shadow:0 0 6px rgba(90,122,92,.4); }
+.s-off { background:var(--border); }
+.s-pri { background:var(--caution); box-shadow:0 0 6px rgba(184,92,56,.4); }
+
+/* CULTURAS */
+.cult-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+.cult-row  { display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; }
+.cult-label { font-size:12px; color:var(--ink-2); }
+.cult-val   { font-family:var(--font-mono); font-size:12px; }
+.cult-track { height:5px; background:var(--border-soft); border-radius:3px; margin-top:4px; overflow:hidden; }
+.cult-fill  { height:100%; border-radius:3px; }
+
+/* CLIMA MINI */
+.clima-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px; }
+.clima-item {
+  background:var(--surface-2); border:1px solid var(--border-soft);
+  border-radius:var(--radius); padding:9px 11px;
+}
+.clima-lbl { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px; }
+.clima-val { font-family:var(--font-mono); font-size:21px; }
+
+/* PREVISÃO */
+.forecast-strip { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:4px; }
+.fc-day {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:9px 4px; border-radius:var(--radius);
+  background:var(--surface-2); border:1px solid var(--border-soft);
+}
+.fc-day.hoje { background:var(--sage-light); border-color:rgba(90,122,92,.25); }
+.fc-wd   { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-3); }
+.fc-day.hoje .fc-wd { color:var(--sage); }
+.fc-emoji{ font-size:17px; }
+.fc-hi   { font-family:var(--font-mono); font-size:13px; }
+.fc-lo   { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); }
+.fc-mm   { font-family:var(--font-mono); font-size:9px; color:var(--clay); }
+
+/* DRONES */
+.drone-list { display:flex; flex-direction:column; gap:7px; margin-top:14px; }
+.drone-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:8px 12px; background:var(--surface-2);
+  border:1px solid var(--border-soft); border-radius:var(--radius);
+}
+.drone-row.alert { background:var(--caution-lt); border-color:#e8c4b3; }
+.drone-nm  { font-size:11px; font-weight:500; margin-bottom:2px; }
+.drone-sub { font-family:var(--font-mono); font-size:10px; color:var(--ink-3); }
+.drone-bat { font-family:var(--font-mono); font-size:11px; }
+
+/* ANIMATIONS */
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+@keyframes rise  { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.kpi-row > .card:nth-child(1){animation-delay:.04s}
+.kpi-row > .card:nth-child(2){animation-delay:.08s}
+.kpi-row > .card:nth-child(3){animation-delay:.12s}
+.kpi-row > .card:nth-child(4){animation-delay:.16s}
+.main-grid > .card:nth-child(1){animation-delay:.18s}
+.main-grid > .card:nth-child(2){animation-delay:.22s}
+.bottom-grid > .card:nth-child(1){animation-delay:.24s}
+.bottom-grid > .card:nth-child(2){animation-delay:.28s}
+.bottom-grid > .card:nth-child(3){animation-delay:.32s}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-leaf">🌿</div>
+    <span class="logo-name">AgroTech</span>
+    <span class="logo-sep">·</span>
+    <span class="logo-farm">Fazenda Nova Esperança — Safra 2025/26</span>
+  </div>
+  <div class="header-right">
+    <div class="live-pill"><div class="live-dot"></div>142 sensores ativos</div>
+    <div class="clock">
+      <div id="clock">--:--:--</div>
+      <div id="dateStr" style="font-size:11px">—</div>
+    </div>
+  </div>
+</header>
+
+<div class="dashboard">
+
+  <div class="page-title">
+    <h1>Visão Geral</h1>
+    <span>Monitoramento em tempo real · 4.280 ha</span>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--sage)"></div>Produtividade</div>
+      <div class="kpi-num">87.4<span class="kpi-unit">sc/ha</span></div>
+      <div class="kpi-desc">Estimativa de colheita</div>
+      <div class="kpi-tag tag-up">▲ +12.3% vs safra anterior</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:87%;background:var(--sage-mid)"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--clay)"></div>Umidade do Solo</div>
+      <div class="kpi-num">62<span class="kpi-unit">%</span></div>
+      <div class="kpi-desc">Média das parcelas</div>
+      <div class="kpi-tag tag-nt">● dentro do ideal (55–70%)</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:62%;background:var(--clay)"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--wheat)"></div>Cobertura IoT</div>
+      <div class="kpi-num">98.6<span class="kpi-unit">%</span></div>
+      <div class="kpi-desc">4.280 ha monitorados</div>
+      <div class="kpi-tag tag-up">▲ 142 sensores online</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:99%;background:var(--wheat)"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--caution)"></div>Alertas Ativos</div>
+      <div class="kpi-num">5</div>
+      <div class="kpi-desc">2 críticos · 3 atenção</div>
+      <div class="kpi-tag tag-wn">▲ requer ação hoje</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:40%;background:var(--caution)"></div></div>
+    </div>
+  </div>
+
+  <!-- MAPA + ALERTAS -->
+  <div class="main-grid">
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--sage)"></div>Mapa de Talhões — Índice NDVI</div>
+      <div class="field-grid">
+        <div class="field-cell ex" ><div class="fc-id">T-01</div><div class="fc-val">0.82</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-02</div><div class="fc-val">0.79</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-03</div><div class="fc-val">0.71</div><div class="fc-crop">Milho</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-04</div><div class="fc-val">0.68</div><div class="fc-crop">Milho</div></div>
+        <div class="field-cell mod"><div class="fc-id">T-05</div><div class="fc-val">0.55</div><div class="fc-crop">Algodão</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-06</div><div class="fc-val">0.73</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell mod"><div class="fc-id">T-07</div><div class="fc-val">0.52</div><div class="fc-crop">Algodão</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-08</div><div class="fc-val">0.84</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-09</div><div class="fc-val">0.80</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell low"><div class="fc-id">T-10</div><div class="fc-val">0.38</div><div class="fc-crop">Sorgo</div></div>
+        <div class="field-cell off"><div class="fc-id">T-11</div><div class="fc-val">—</div>  <div class="fc-crop">Pousio</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-12</div><div class="fc-val">0.69</div><div class="fc-crop">Milho</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-13</div><div class="fc-val">0.70</div><div class="fc-crop">Milho</div></div>
+        <div class="field-cell mod"><div class="fc-id">T-14</div><div class="fc-val">0.57</div><div class="fc-crop">Algodão</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-15</div><div class="fc-val">0.83</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-16</div><div class="fc-val">0.78</div><div class="fc-crop">Soja</div></div>
+        <div class="field-cell low"><div class="fc-id">T-17</div><div class="fc-val">0.41</div><div class="fc-crop">Sorgo</div></div>
+        <div class="field-cell off"><div class="fc-id">T-18</div><div class="fc-val">—</div>  <div class="fc-crop">Pousio</div></div>
+        <div class="field-cell bom"><div class="fc-id">T-19</div><div class="fc-val">0.66</div><div class="fc-crop">Milho</div></div>
+        <div class="field-cell ex" ><div class="fc-id">T-20</div><div class="fc-val">0.81</div><div class="fc-crop">Soja</div></div>
+      </div>
+      <div class="map-legend">
+        <span><span class="legend-dot" style="background:#c0d9c1"></span>Excelente ≥ 0.75</span>
+        <span><span class="legend-dot" style="background:#d5d8af"></span>Bom 0.60–0.74</span>
+        <span><span class="legend-dot" style="background:#e8d9aa"></span>Moderado 0.45–0.59</span>
+        <span><span class="legend-dot" style="background:#e8c4b3"></span>Baixo &lt; 0.45</span>
+        <span><span class="legend-dot" style="background:var(--border)"></span>Inativo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--caution)"></div>Alertas Agronômicos</div>
+      <div class="alert-stack">
+        <div class="alert-row crit">
+          <div class="alert-icon">⚠️</div>
+          <div>
+            <div class="alert-title">Déficit Hídrico — T17</div>
+            <div class="alert-detail">Umidade em 29%, abaixo do crítico. Irrigação prioritária ativada.</div>
+          </div>
+          <div class="alert-time">08:14</div>
+        </div>
+        <div class="alert-row crit">
+          <div class="alert-icon">🐛</div>
+          <div>
+            <div class="alert-title">Praga Detectada — T10</div>
+            <div class="alert-detail">Possível percevejo marrom. Vistoria agendada para hoje.</div>
+          </div>
+          <div class="alert-time">07:52</div>
+        </div>
+        <div class="alert-row warn">
+          <div class="alert-icon">📉</div>
+          <div>
+            <div class="alert-title">NDVI Baixo — T10, T17</div>
+            <div class="alert-detail">Índice abaixo de 0.45. Possível estresse nutricional.</div>
+          </div>
+          <div class="alert-time">06:30</div>
+        </div>
+        <div class="alert-row info">
+          <div class="alert-icon">🌧️</div>
+          <div>
+            <div class="alert-title">Chuva Prevista — 19/03</div>
+            <div class="alert-detail">35–50mm esperados. Irrigação será suspensa automaticamente.</div>
+          </div>
+          <div class="alert-time">06:00</div>
+        </div>
+        <div class="alert-row info">
+          <div class="alert-icon">🔧</div>
+          <div>
+            <div class="alert-title">Manutenção — Drone AGR-03</div>
+            <div class="alert-detail">Bateria degradada (41%). Substituição recomendada.</div>
+          </div>
+          <div class="alert-time">05:40</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom-grid">
+
+    <!-- Irrigação -->
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--clay)"></div>Irrigação — Setores</div>
+      <div class="irr-list">
+        <div class="irr-row">
+          <div class="irr-id">IRR-01</div>
+          <div><div class="irr-name">Soja — T01 a T04</div><div class="irr-umid">Umid. 68%</div></div>
+          <div class="sdot s-off"></div>
+        </div>
+        <div class="irr-row">
+          <div class="irr-id">IRR-02</div>
+          <div><div class="irr-name">Milho — T06, T07</div><div class="irr-umid">44% · 320 m³/h</div></div>
+          <div class="sdot s-on"></div>
+        </div>
+        <div class="irr-row">
+          <div class="irr-id">IRR-03</div>
+          <div><div class="irr-name">Algodão — T05</div><div class="irr-umid">48% · 185 m³/h</div></div>
+          <div class="sdot s-on"></div>
+        </div>
+        <div class="irr-row">
+          <div class="irr-id">IRR-04</div>
+          <div><div class="irr-name">Soja — T08 a T10</div><div class="irr-umid">Umid. 63%</div></div>
+          <div class="sdot s-off"></div>
+        </div>
+        <div class="irr-row" style="background:var(--caution-lt);border-color:#e8c4b3">
+          <div class="irr-id">IRR-05</div>
+          <div><div class="irr-name">Sorgo — T17</div><div class="irr-umid" style="color:var(--caution)">29% · 210 m³/h</div></div>
+          <div class="sdot s-pri"></div>
+        </div>
+        <div class="irr-row">
+          <div class="irr-id">IRR-06</div>
+          <div><div class="irr-name">Soja — T15, T16</div><div class="irr-umid">Umid. 70%</div></div>
+          <div class="sdot s-off"></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border-soft);font-family:var(--font-mono);font-size:11px;color:var(--ink-3);display:flex;gap:16px;">
+        <span>Total: <span style="color:var(--clay)">715 m³/h</span></span>
+        <span>Economia vs manual: <span style="color:var(--sage)">−23%</span></span>
+      </div>
+    </div>
+
+    <!-- Culturas + Clima -->
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--olive)"></div>Área por Cultura</div>
+      <div class="cult-list">
+        <div>
+          <div class="cult-row"><div class="cult-label">🌱 Soja</div><div class="cult-val">2.140 ha</div></div>
+          <div class="cult-track"><div class="cult-fill" style="width:88%;background:var(--sage-mid)"></div></div>
+        </div>
+        <div>
+          <div class="cult-row"><div class="cult-label">🌽 Milho</div><div class="cult-val">1.120 ha</div></div>
+          <div class="cult-track"><div class="cult-fill" style="width:52%;background:var(--olive)"></div></div>
+        </div>
+        <div>
+          <div class="cult-row"><div class="cult-label">🌿 Algodão</div><div class="cult-val">680 ha</div></div>
+          <div class="cult-track"><div class="cult-fill" style="width:32%;background:var(--clay)"></div></div>
+        </div>
+        <div>
+          <div class="cult-row"><div class="cult-label">🌾 Sorgo</div><div class="cult-val">220 ha</div></div>
+          <div class="cult-track"><div class="cult-fill" style="width:10%;background:var(--wheat)"></div></div>
+        </div>
+        <div>
+          <div class="cult-row"><div class="cult-label">⬜ Pousio</div><div class="cult-val">120 ha</div></div>
+          <div class="cult-track"><div class="cult-fill" style="width:6%;background:var(--border)"></div></div>
+        </div>
+      </div>
+      <div class="card-label" style="margin-top:20px;margin-bottom:10px"><div class="card-label-dot" style="background:var(--wheat)"></div>Clima Agora</div>
+      <div class="clima-grid">
+        <div class="clima-item"><div class="clima-lbl">Temperatura</div><div class="clima-val" style="color:var(--wheat)">32°C</div></div>
+        <div class="clima-item"><div class="clima-lbl">Umid. do Ar</div><div class="clima-val" style="color:var(--clay)">71%</div></div>
+        <div class="clima-item"><div class="clima-lbl">Vento</div><div class="clima-val" style="color:var(--sage)">18 km/h</div></div>
+        <div class="clima-item"><div class="clima-lbl">Chuva (7d)</div><div class="clima-val" style="color:var(--clay)">48 mm</div></div>
+      </div>
+    </div>
+
+    <!-- Previsão + Drones -->
+    <div class="card">
+      <div class="card-label"><div class="card-label-dot" style="background:var(--wheat)"></div>Previsão — 7 dias</div>
+      <div class="forecast-strip">
+        <div class="fc-day hoje"><div class="fc-wd">Seg</div><div class="fc-emoji">⛅</div><div class="fc-hi">34°</div><div class="fc-lo">22°</div><div class="fc-mm">5mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Ter</div><div class="fc-emoji">☀️</div><div class="fc-hi">36°</div><div class="fc-lo">23°</div><div class="fc-mm">0mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Qua</div><div class="fc-emoji">🌤️</div><div class="fc-hi">35°</div><div class="fc-lo">22°</div><div class="fc-mm">2mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Qui</div><div class="fc-emoji">⛈️</div><div class="fc-hi">30°</div><div class="fc-lo">20°</div><div class="fc-mm">42mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Sex</div><div class="fc-emoji">🌧️</div><div class="fc-hi">28°</div><div class="fc-lo">19°</div><div class="fc-mm">18mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Sáb</div><div class="fc-emoji">🌤️</div><div class="fc-hi">32°</div><div class="fc-lo">21°</div><div class="fc-mm">3mm</div></div>
+        <div class="fc-day"><div class="fc-wd">Dom</div><div class="fc-emoji">☀️</div><div class="fc-hi">35°</div><div class="fc-lo">22°</div><div class="fc-mm">0mm</div></div>
+      </div>
+      <div class="card-label" style="margin-top:20px;margin-bottom:10px"><div class="card-label-dot" style="background:var(--sage)"></div>Drones em Operação</div>
+      <div class="drone-list">
+        <div class="drone-row">
+          <div><div class="drone-nm">AGR-01 · Pulverização</div><div class="drone-sub">T-06 · 312 ha cobertos</div></div>
+          <div class="drone-bat" style="color:var(--sage)">82%</div>
+        </div>
+        <div class="drone-row">
+          <div><div class="drone-nm">AGR-02 · Mapeamento</div><div class="drone-sub">T-10, T-17 · NDVI scan</div></div>
+          <div class="drone-bat" style="color:var(--sage)">65%</div>
+        </div>
+        <div class="drone-row alert">
+          <div><div class="drone-nm">AGR-03 · Carregando</div><div class="drone-sub">Base Central · ETA 38 min</div></div>
+          <div class="drone-bat" style="color:var(--caution)">41%</div>
+        </div>
+        <div class="drone-row">
+          <div><div class="drone-nm">AGR-05 · Pulverização</div><div class="drone-sub">T-14, T-08 · 188 ha</div></div>
+          <div class="drone-bat" style="color:var(--sage)">78%</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function tick(){
+  const n=new Date();
+  document.getElementById('clock').textContent=n.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('dateStr').textContent=n.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'});
+}
+tick(); setInterval(tick,1000);
+
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.kpi-bar-fill,.cult-fill').forEach(el=>{
+    const w=el.style.width; el.style.width='0';
+    requestAnimationFrame(()=>{ el.style.transition='width 1.1s cubic-bezier(.4,0,.2,1)'; el.style.width=w; });
+  });
+});
+</script>
+</body>
+</html>
