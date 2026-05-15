@@ -1,6 +1,11 @@
 {
   "name": "luxorautomotivo",
   "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "license": "ISC",
+  "author": "y",
+  "type": "commonjs",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
@@ -23,6 +28,5 @@
   "devDependencies": {
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2"
-  },
-  "private": true
+  }
 }
