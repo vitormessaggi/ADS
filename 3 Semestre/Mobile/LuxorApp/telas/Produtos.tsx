@@ -33,14 +33,10 @@ export default function TelaProdutos() {
     { id: '2', nome: 'Lavagem de Manutenção', preco: 89.00, servico: 'Lavagem', descricao: 'Lavagem técnica segura para veículos já vitrificados', imagem: require('../assets/prod Lavagem.jpg') } as any,
     { id: '3', nome: 'Polimento Técnico', preco: 450.00, servico: 'Estética', descricao: 'Remoção de riscos leves e restauração do brilho', imagem: require('../assets/prod 3.jpg') } as any,
     { id: '4', nome: 'Correção de Pintura', preco: 850.00, servico: 'Estética', descricao: 'Nivelamento do verniz e remoção de marcas profundas', imagem: require('../assets/prod 3.jpg') } as any,
-    { id: '5', nome: 'Remoção de Chuva Ácida', preco: 120.00, servico: 'Estética', descricao: 'Descontaminação e cristalização dos vidros' } as any,
+    { id: '5', nome: 'Remoção de Chuva Ácida', preco: 120.00, servico: 'Estética', descricao: 'Descontaminação e cristalização dos vidros', imagem: require('../assets/prod 3.jpg') } as any,
     { id: '6', nome: 'Vitrificação de Pintura', preco: 1200.00, servico: 'Proteção', descricao: 'Proteção cerâmica (Coating) com durabilidade de até 3 anos', imagem: require('../assets/prod6.jpg') } as any,
-    { id: '7', nome: 'Aplicação de Cera Premium', preco: 180.00, servico: 'Proteção', descricao: 'Proteção com cera de carnaúba e brilho intenso' } as any,
-    { id: '8', nome: 'Vitrificação de Plásticos', preco: 250.00, servico: 'Proteção', descricao: 'Restauração e proteção UV para plásticos externos' } as any,
-    { id: '9', nome: 'Higienização Interna', preco: 350.00, servico: 'Serviços Especiais', descricao: 'Limpeza profunda de estofados, teto e carpetes' } as any,
-    { id: '10', nome: 'Hidratação de Couro', preco: 150.00, servico: 'Serviços Especiais', descricao: 'Limpeza e condicionamento dos bancos de couro' } as any,
-    { id: '11', nome: 'Revitalização de Faróis', preco: 130.00, servico: 'Serviços Especiais', descricao: 'Lixamento, polimento e proteção UV das lentes' } as any,
-    { id: '12', nome: 'Lavagem Técnica de Motor', preco: 180.00, servico: 'Serviços Especiais', descricao: 'Limpeza segura com pincéis e proteção de contatos elétricos' } as any,
+    { id: '7', nome: 'Aplicação de Cera Premium', preco: 180.00, servico: 'Proteção', descricao: 'Proteção com cera de carnaúba e brilho intenso', imagem: require('../assets/prod1.jpg') } as any,
+    { id: '8', nome: 'Vitrificação de Plásticos', preco: 250.00, servico: 'Proteção', descricao: 'Restauração e proteção UV para plásticos externos', imagem: require('../assets/prod8.jpg')} as any
   ];
 
   const produtosFiltrados = esporteSelecionado === 'Todos'
@@ -51,16 +47,16 @@ export default function TelaProdutos() {
     setCarrinho(carrinhoAtual => [...carrinhoAtual, produto]);
     Alert.alert(
       "Adicionado!",
-      `"${produto.nome}" foi parar no seu carrinho.`,
+      `${produto.nome} adicionado ao seu carrinho! carrinho.`,
       [{ text: "OK", style: "default" }]
     );
   };
 
-  // NOVO: Função para remover item específico do carrinho
+
   const removerDoCarrinho = (indexParaRemover: number, nomeProduto: string) => {
     Alert.alert(
       "Remover Serviço",
-      `Deseja remover "${nomeProduto}" do carrinho?`,
+      `Deseja remover ${nomeProduto} do seu carrinho?`,
       [
         { text: "Cancelar", style: "cancel" },
         { 
@@ -319,13 +315,13 @@ const styles = StyleSheet.create({
   textoCarrinhoVazio: { color: '#888888', fontSize: 16, marginTop: 10 },
   itemCarrinho: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#111111', padding: 12, borderRadius: 8, marginBottom: 8, borderWidth: 1, borderColor: '#222222' },
   
-  // NOVOS ESTILOS para suportar o ícone e alinhamento do item clicável
+ 
   infoItemCarrinho: { flexDirection: 'row', alignItems: 'center', flex: 1, paddingRight: 10 },
   iconeLixeira: { marginRight: 8 },
-  nomeItemCarrinho: { color: '#ffffff', fontSize: 14, flexShrink: 1 },
+  nomeItemCarrinho: { color: '#ff0000', fontSize: 14, flexShrink: 1 },
   
-  precoItemCarrinho: { color: '#004E89', fontSize: 14, fontWeight: '700' },
+  precoItemCarrinho: { color: '#7bc6ff', fontSize: 14, fontWeight: '700' },
   footerModalCarrinho: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderTopWidth: 1, borderTopColor: '#222222', paddingTop: 15, marginTop: 5 },
-  textoTotalCarrinho: { color: '#aaaaaa', fontSize: 16, fontWeight: '600' },
+  textoTotalCarrinho: { color: '#ffffff', fontSize: 16, fontWeight: '600' },
   valorTotalCarrinho: { color: '#ffffff', fontSize: 22, fontWeight: '700' }
 });

@@ -1,28 +1,73 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, TextInput } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, ScrollView, View, Image, TouchableOpacity, Text, TextInput, Alert } from 'react-native';
+import { useState, useRef } from 'react';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 
-//Ícones
+// Ícones
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-//Componente de Texto
-import Texto from '../componentes/Texto'
+// Componente de Texto
+import Texto from '../componentes/Texto';
 
 export default function TelaPerfil() {
   const [nome, setNome] = useState('João Silva');
   const [email, setEmail] = useState('joao@example.com');
   const [whatsapp, setWhatsapp] = useState('(11) 99999-9999');
+  
+  // Estado que controla se a tela está em modo de edição
   const [isEditando, setIsEditando] = useState(false);
+  
+  // Mantemos o estado da foto para manipulação de dados, mas não o exibimos no círculo padrão
+  const [fotoUsuario, setFotoUsuario] = useState(null);
+  
+  // Estados e referências para a Câmera
+  const [permissao, pedirPermissao] = useCameraPermissions();
+  const [isCameraAtiva, setIsCameraAtiva] = useState(false);
+  const cameraRef = useRef(null);
 
-  const handleMudarFoto = () => {
-    // Aqui você pode adicionar a lógica para abrir a câmera ou galeria
-    console.log('Abrir câmera/galeria');
+  const handleAbrirCamera = async () => {
+    // Verifica permissão antes de abrir
+    if (!permissao?.granted) {
+      const { status } = await pedirPermissao();
+      if (status !== 'granted') {
+        Alert.alert('Permissão negada', 'Precisamos da câmera para atualizar sua foto.');
+        return;
+      }
+    }
+    // Ativa o preview da câmera dentro do círculo
+    setIsCameraAtiva(true);
+  };
+
+  const handleTirarFoto = async () => {
+    if (cameraRef.current) {
+      try {
+        // Captura a foto
+        const foto = await cameraRef.current.takePictureAsync({
+          quality: 0.7, // Boa qualidade sem pesar muito
+          base64: false,
+        });
+        
+        // Salva a imagem interna, desativa o preview e volta para a logo
+        setFotoUsuario(foto.uri);
+        setIsCameraAtiva(false);
+        // Opcional: Avisar o usuário que a foto foi capturada
+        Alert.alert('Sucesso', 'Foto capturada!');
+      } catch (erro) {
+        Alert.alert('Erro', 'Não foi possível capturar a foto.');
+      }
+    }
   };
 
   const handleSalvarAlteracoes = () => {
-    setIsEditando(true);
-    // Aqui você pode adicionar a lógica para salvar os dados
-    console.log('Dados salvos:', { nome, email, whatsapp });
+    setIsEditando(false);
+    setIsCameraAtiva(false); // Garante que a câmera seja fechada se o usuário salvar enquanto ela estiver aberta
+    // Exemplo de log para mostrar que os dados (incluindo a URI da nova foto) estão prontos
+    console.log('Dados salvos:', { nome, email, whatsapp, fotoUsuario });
+  };
+
+  const handleCancelarEdicao = () => {
+    setIsEditando(false);
+    setIsCameraAtiva(false); // Fecha a câmera caso o usuário cancele a edição no meio do processo
   };
 
   return (
@@ -31,21 +76,46 @@ export default function TelaPerfil() {
       {/* Seção de Foto de Perfil */}
       <View style={styles.secaoFoto}>
         <View style={styles.containerFoto}>
-          <Image
-            source={require('../assets/Logo.png')}
-            style={styles.fotoPerfil}
-            resizeMode="contain"
-          />
-          {/* Deixando espaço comentado para adicionar foto do usuário depois */}
-          {/* <Image source={{uri: fotoUsuario}} style={styles.fotoPerfil} /> */}
+          {isCameraAtiva ? (
+            // Exibe a câmera ao vivo se o modo câmera estiver ativo
+            <CameraView 
+              style={styles.cameraLive} 
+              facing="front" // Câmera frontal
+              ref={cameraRef}
+            />
+          ) : (
+            // Se a câmera não estiver ATIVA, sempre exibe a logo padrão
+            <Image
+              source={require('../assets/Logo.png')}
+              style={styles.fotoPerfil}
+              resizeMode="contain"
+            />
+          )}
         </View>
         
-        <TouchableOpacity 
-          style={styles.botaoCamara}
-          onPress={handleMudarFoto}
-        >
-          <Ionicons name="camera" size={20} color="white" />
-        </TouchableOpacity>
+        {/* O botão da câmera e da lente SÓ APARECE se o modo de edição estiver ativo */}
+        {isEditando && (
+          <TouchableOpacity 
+            style={styles.botaoCamara}
+            onPress={isCameraAtiva ? handleTirarFoto : handleAbrirCamera}
+          >
+            <Ionicons 
+              name={isCameraAtiva ? "aperture" : "camera"} 
+              size={isCameraAtiva ? 24 : 20} 
+              color="white" 
+            />
+          </TouchableOpacity>
+        )}
+
+        {/* Botão vermelho para cancelar e fechar apenas a câmera */}
+        {isCameraAtiva && (
+          <TouchableOpacity 
+            style={styles.botaoCancelarCamera}
+            onPress={() => setIsCameraAtiva(false)}
+          >
+            <Ionicons name="close" size={16} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
 
       {/* Seção de Informações */}
@@ -59,7 +129,6 @@ export default function TelaPerfil() {
             editable={isEditando}
             placeholder="Digite seu nome"
             placeholderTextColor="#999"
-            keyboardType="default"
           />
         </View>
 
@@ -112,7 +181,7 @@ export default function TelaPerfil() {
 
             <TouchableOpacity 
               style={styles.botaoCancelar}
-              onPress={() => setIsEditando(false)}
+              onPress={handleCancelarEdicao}
             >
               <Ionicons name="close" size={18} color="white" />
               <Text style={styles.textoBotaoCancelar}>Cancelar</Text>
@@ -133,7 +202,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 60,
   },
-   secaoFoto: {
+  secaoFoto: {
     alignItems: 'center',
     marginBottom: 40,
     marginTop: 20,
@@ -149,15 +218,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 4,
     borderColor: '#001799',
-    overflow: 'hidden',
+    overflow: 'hidden', 
   },
   fotoPerfil: {
     width: '90%',
     height: '90%',
   },
+  // fotoPerfilAtiva: { // Removido, pois não estamos exibindo a foto do usuário neste círculo
+  //   width: '100%',
+  //   height: '100%',
+  // },
+  cameraLive: {
+    width: '100%',
+    height: '100%', 
+  },
   botaoCamara: {
     position: 'absolute',
-    bottom: 0, // Ajustado para ficar na borda da foto
+    bottom: 0,
     right: 0,
     backgroundColor: '#001799',
     width: 56,
@@ -171,6 +248,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  botaoCancelarCamera: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: '#FF3B30',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
   secaoInfo: {
     marginBottom: 30,
     backgroundColor: '#F9F9F9',
@@ -178,10 +267,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 24,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
   },
   containerCampo: {
     marginBottom: 18,
@@ -190,9 +275,7 @@ const styles = StyleSheet.create({
     color: '#004E89',
     fontSize: 13,
     fontWeight: '700',
-    fontFamily: 'FontePadrao',
     marginBottom: 10,
-    letterSpacing: 0.3,
   },
   input: {
     backgroundColor: '#FFFFFF',
@@ -202,14 +285,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 14,
     color: '#004E89',
-    fontFamily: 'FontePadrao',
     fontSize: 15,
     fontWeight: '600',
-    elevation: 1,
-    shadowColor: '#001799',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
   },
   inputDesabilitado: {
     backgroundColor: '#F5F5F5',
@@ -228,17 +305,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    elevation: 4,
-    shadowColor: '#000b4b',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
   },
   textoBotaoEditar: {
     color: 'white',
     fontSize: 16,
     fontWeight: '700',
-    fontFamily: 'FontePadrao',
   },
   botaoSalvar: {
     backgroundColor: '#00A86B',
@@ -248,17 +319,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    elevation: 4,
-    shadowColor: '#00A86B',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
   },
   textoBotaoSalvar: {
     color: 'white',
     fontSize: 16,
     fontWeight: '700',
-    fontFamily: 'FontePadrao',
   },
   botaoCancelar: {
     backgroundColor: '#CCCCCC',
@@ -268,16 +333,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
   textoBotaoCancelar: {
     color: 'white',
     fontSize: 16,
     fontWeight: '700',
-    fontFamily: 'FontePadrao',
   },
 });
