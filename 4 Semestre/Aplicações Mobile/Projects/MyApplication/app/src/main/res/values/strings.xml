@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="Titulo">Exercicios Realizados</string>
+    <string name="bt1">Olá</string>
+    <string name="bt2">Ciclo de Vida</string>
+    <string name="bt3">Sorteio</string>
+    <string name="bt4">Linear\n</string>
+    <string name="bt5">Netflix\n</string>
+    <string name="bt6">Max</string>
+</resources>

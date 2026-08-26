@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Principal">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="@string/Titulo"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btOla"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="144dp"
+        android:text="@string/bt1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btCiclo"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bt2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btOla" />
+
+    <Button
+        android:id="@+id/btSorteio"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bt3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btCiclo" />
+
+    <Button
+        android:id="@+id/btLinear"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bt4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSorteio" />
+
+    <Button
+        android:id="@+id/btnetflix"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bt5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btLinear" />
+
+    <Button
+        android:id="@+id/btMax"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bt6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnetflix" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
